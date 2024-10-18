@@ -5,24 +5,37 @@ public class PalindromeChecker {
         Scanner scanner = new Scanner(System.in);
         
         System.out.print("Enter a string: ");
-        String input = scanner.nextLine();
+        String input = scanner.nextLine().trim(); // Trim whitespace
         
-        if (isPalindrome(input)) {
-            System.out.println(input + " is a palindrome.");
+        if (input.isEmpty()) {
+            System.out.println("Input cannot be empty.");
         } else {
-            System.out.println(input + " is not a palindrome.");
+            if (isPalindrome(input)) {
+                System.out.println("\"" + input + "\" is a palindrome.");
+            } else {
+                System.out.println("\"" + input + "\" is not a palindrome.");
+            }
         }
         
         scanner.close();
     }
 
     public static boolean isPalindrome(String str) {
-        str = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        StringBuilder cleanedStr = new StringBuilder();
+        
+        // Build a cleaned version of the string
+        for (char c : str.toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                cleanedStr.append(Character.toLowerCase(c));
+            }
+        }
+        
+        // Check for palindrome
         int left = 0;
-        int right = str.length() - 1;
+        int right = cleanedStr.length() - 1;
         
         while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
+            if (cleanedStr.charAt(left) != cleanedStr.charAt(right)) {
                 return false;
             }
             left++;
