@@ -1,65 +1,58 @@
-// C++ program to check if a number is a Kaprekar number for a specific base.
-
 #include <iostream>
-#include <cmath>
-using namespace std;
 
-bool isKaprekar(int number, int base)
-{
-    if (number < 0 || base <= 1)
-    {
-        return false;
+// Definition for a binary tree node
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+};
+
+// Pre-order traversal of the tree
+void preOrderTraversal(TreeNode* root) {
+    if (root == nullptr) {
+        return;
     }
-    long long squared = static_cast<long long>(number) * number;
-    long long divisor = 1;
-    while (squared / divisor >= base)
-    {
-        divisor *= base;
-    }
-    while (divisor > 0)
-    {
-        long long left = squared / divisor;
-        long long right = squared % divisor;
-        if (left + right == number && right > 0)
-        {
-            return true;
-        }
-        divisor /= base;
-    }
-    return false;
+
+    // Visit the current node
+    std::cout << root->val << " ";
+
+    // Traverse the left subtree
+    preOrderTraversal(root->left);
+
+    // Traverse the right subtree
+    preOrderTraversal(root->right);
 }
-int main()
-{
-    int number, base;
-    cout << "Enter a number: ";
-    cin >> number;
-    cout << "Enter the base: ";
-    cin >> base;
-    if (isKaprekar(number, base))
-    {
-        cout << number << " is a Kaprekar number in base " << base << endl;
+
+// Helper function to delete the tree and free memory
+void deleteTree(TreeNode* root) {
+    if (root == nullptr) {
+        return;
     }
-    else
-    {
-        cout << number << " is not a Kaprekar number in base " << base << endl;
-    }
+
+    // Recursively delete the left and right subtrees
+    deleteTree(root->left);
+    deleteTree(root->right);
+
+    // Delete the current node
+    delete root;
+}
+
+int main() {
+    // Create a sample binary tree
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->left->left = new TreeNode(4);
+    root->left->right = new TreeNode(5);
+
+    // Perform pre-order traversal
+    std::cout << "Pre-Order Traversal: ";
+    preOrderTraversal(root);
+    std::cout << std::endl;
+
+    // Clean up memory by deleting the tree
+    deleteTree(root);
+
     return 0;
 }
-
-// Output:
-
-// Enter a number: 9
-// Enter the base: 10
-// 9 is a Kaprekar number in base 10
-// Enter a number: 45
-// Enter the base: 10
-// 45 is a Kaprekar number in base 10
-// Enter a number: 297
-// Enter the base: 10// 297 is a Kaprekar number in base 10
-
-// Non Kaprekar Numbers
-// Enter a number: 13
-// Enter the base: 10
-// 13 is not a Kaprekar number in base 10
-// Enter a number: 19
-// Enter the base: 10// 19 is not a Kaprekar number in base 10
