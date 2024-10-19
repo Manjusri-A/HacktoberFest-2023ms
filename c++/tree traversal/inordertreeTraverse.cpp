@@ -23,6 +23,20 @@ void inOrderTraversal(TreeNode* root) {
     inOrderTraversal(root->right);
 }
 
+// Function to delete the tree and free memory
+void deleteTree(TreeNode* root) {
+    if (root == nullptr) {
+        return;
+    }
+
+    // Delete the left and right subtrees
+    deleteTree(root->left);
+    deleteTree(root->right);
+
+    // Delete the current node
+    delete root;
+}
+
 int main() {
     // Create a sample binary tree
     TreeNode* root = new TreeNode(1);
@@ -36,7 +50,8 @@ int main() {
     inOrderTraversal(root);
     std::cout << std::endl;
 
-    // Clean up memory (not shown in the code)
+    // Clean up memory
+    deleteTree(root);
 
     return 0;
 }
