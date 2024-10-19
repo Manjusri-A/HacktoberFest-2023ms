@@ -34,4 +34,14 @@ int main() {
     // Perform post-order traversal
     std::cout << "Post-Order Traversal: ";
     postOrderTraversal(root);
-    std::
+    std::cout << std::endl; // Added this line to print a newline after the traversal
+
+    // Clean up the allocated memory (optional, but good practice)
+    delete root->left->left;
+    delete root->left->right;
+    delete root->left;
+    delete root->right;
+    delete root;
+
+    return 0;
+}
