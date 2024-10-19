@@ -8,8 +8,8 @@ public class BogoSort {
     }
 
     void shuffle(int[] a) {
-        for (int i = 1; i < a.length; i++) {
-            swap(a, i, (int)(Math.random() * i));
+        for (int i = 0; i < a.length; i++) { // Start from 0 to include the first element
+            swap(a, i, (int)(Math.random() * (i + 1))); // Generate a random index from 0 to i
         }
     }
 
@@ -42,16 +42,16 @@ public class BogoSort {
         int[] a = new int[n];
 
         System.out.println("Enter the elements:");
-
         for (int i = 0; i < n; i++) {
             a[i] = scanner.nextInt();
         }
 
         BogoSort ob = new BogoSort();
-
         ob.bogoSort(a);
 
         System.out.print("Sorted array: ");
         ob.printArray(a);
+
+        scanner.close(); // Close the scanner to prevent resource leaks
     }
 }
